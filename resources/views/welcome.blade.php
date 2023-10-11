@@ -201,19 +201,19 @@
        // testing to click enter send message
         function newMessage() {
     
-        message = $(".message-input input").val();
-        if($.trim(message) == '') {
-            return false;
+        message = $(".message-input input").val(); //get input value
+        if($.trim(message) == '') { // check if null
+            return false; // dont send message
         }
         $('<li class="sent"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
         $('.message-input input').val(null);
         $('.contact.active .preview').html('<span>You: </span>' + message);
         $(".messages").animate({ scrollTop: $(document).height() }, "fast");
     };
-     $(window).on('keydown', function(e) {
+     $(window).on('keydown', function(e) { //onclick enter button
       if (e.which == 13) {
-        sendMessage();
-        newMessage();
+        sendMessage(); //call this function to send all fetch api data 
+        newMessage();  // call this function for blink the input type
         return false;
       }
     });
