@@ -80,11 +80,12 @@
         {{-- end  --}}
     </div>
     <script>
-      //set time for refresh 
-      window.setTimeout(function(){ document.location.reload(true); 
-},30000);
+        //set time for refresh 
+        window.setTimeout(function() {
+            document.location.reload(true);
+        }, 30000);
 
-      //set time
+        //set time
         var auth_id = {{ auth()->user()->id }} //get auth id
         var receiver_id; // var for  receiver id
 
@@ -163,7 +164,7 @@
                     // Handle the response data here
                     console.log(response);
                     var conversationList = document.getElementById("conversation"); //get conversation id
-            conversationList.innerHTML = '' 
+                    conversationList.innerHTML = ''
                     for (var i = 0; i < response.length; i++) { //loop for message
                         var listItem = document.createElement("li"); //list item create by js
                         listItem.classList.add("sent");
@@ -176,7 +177,7 @@
                             listItem.style.backgroundColor = "yellow";
                         }
 
-                        
+
                         // Append the <li> element to the <ul> element
                         conversationList.appendChild(listItem);
                     }
@@ -192,10 +193,31 @@
 
         }
         // end post request
-        //onclick send message
+       // onclick send message
         $('.submit').click(function() { // click submit button send message
             newMessage();
 
         });
+       // testing to click enter send message
+        function newMessage() {
+    
+        message = $(".message-input input").val();
+        if($.trim(message) == '') {
+            return false;
+        }
+        $('<li class="sent"><img src="http://emilcarlsson.se/assets/mikeross.png" alt="" /><p>' + message + '</p></li>').appendTo($('.messages ul'));
+        $('.message-input input').val(null);
+        $('.contact.active .preview').html('<span>You: </span>' + message);
+        $(".messages").animate({ scrollTop: $(document).height() }, "fast");
+    };
+     $(window).on('keydown', function(e) {
+      if (e.which == 13) {
+        sendMessage();
+        newMessage();
+        return false;
+      }
+    });
+
+  
     </script>
 @endsection

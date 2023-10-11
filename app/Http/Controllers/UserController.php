@@ -31,5 +31,6 @@ class UserController extends Controller
      return redirect('/')->with('message','record updated successfully');
     }
     
+    
    
 }
