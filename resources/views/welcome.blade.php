@@ -80,6 +80,11 @@
         {{-- end  --}}
     </div>
     <script>
+      //set time for refresh 
+      window.setTimeout(function(){ document.location.reload(true); 
+},30000);
+
+      //set time
         var auth_id = {{ auth()->user()->id }} //get auth id
         var receiver_id; // var for  receiver id
 
