@@ -120,10 +120,11 @@
 
                 });
         }
+
         // start post request
         // Define the URL for the POST request
         const url = "{{ route('insertmsg') }}"; //fetch post url 
-        const csrfToken = '{{ csrf_token() }}';   //token 
+        const csrfToken = '{{ csrf_token() }}'; //token 
 
 
         function sendMessage() { // when click send submit button
@@ -132,7 +133,7 @@
             const data = {
                 message: sendmsg, //message var
                 _token: csrfToken, // token
-                receiver_id: receiver_id, 
+                receiver_id: receiver_id,
                 sender_id: auth_id
             };
 
@@ -153,10 +154,32 @@
                     }
                     return response.json(); // Parse the response JSON
                 })
-                .then(data => {
+                .then(response => {
                     // Handle the response data here
-                    console.log(data);
+                    console.log(response);
+                    var conversationList = document.getElementById("conversation"); //get conversation id
+            conversationList.innerHTML = '' 
+                    for (var i = 0; i < response.length; i++) { //loop for message
+                        var listItem = document.createElement("li"); //list item create by js
+                        listItem.classList.add("sent");
+
+                        // Set the text content of the <li> element to the message
+                        listItem.textContent = response[i].message; //show message
+                        if (response[i].receiver_id == auth_id) {
+                            listItem.style.backgroundColor = "lightblue";
+                        } else {
+                            listItem.style.backgroundColor = "yellow";
+                        }
+
+                        
+                        // Append the <li> element to the <ul> element
+                        conversationList.appendChild(listItem);
+                    }
+
                 })
+                //testing
+
+                //testing
                 .catch(error => {
                     // Handle any errors that occurred during the fetch
                     console.error('Fetch error:', error);
@@ -167,6 +190,7 @@
         //onclick send message
         $('.submit').click(function() { // click submit button send message
             newMessage();
+
         });
     </script>
 @endsection

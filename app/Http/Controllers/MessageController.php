@@ -14,6 +14,10 @@ class MessageController extends Controller
         $insertmsg->sender_id = auth()->user()->id;
         $insertmsg->receiver_id = $request['receiver_id'];
         $insertmsg->save();
+
+        $user_id = $request->receiver_id;
+        $fetch = Message::whereIn('sender_id',[auth()->user()->id, $user_id])->whereIn('receiver_id',[$user_id, auth()->user()->id])->get();
+        return $fetch;
         return true;
     }
     
